@@ -67,38 +67,33 @@ Content-Type: application/json
     {
       "name": "age",
       "type": "integer",
-      "nullable": true,
-      "default": ""
+      "nullable": true
     },
     {
       "name": "is_active",
       "type": "boolean",
       "nullable": false,
-      "default": "true"
+      "default": true
     },
     {
       "name": "bio",
       "type": "text",
-      "nullable": true,
-      "default": ""
+      "nullable": true
     },
     {
       "name": "salary",
       "type": "decimal",
-      "nullable": true,
-      "default": ""
+      "nullable": true
     },
     {
       "name": "birth_date",
       "type": "date",
-      "nullable": true,
-      "default": ""
+      "nullable": true
     },
     {
       "name": "last_login",
       "type": "datetime",
-      "nullable": true,
-      "default": ""
+      "nullable": true
     }
   ]
 }
@@ -150,19 +145,19 @@ Content-Type: application/json
       "name": "price",
       "type": "decimal",
       "nullable": false,
-      "default": "0.00"
+      "default": 0.00
     },
     {
       "name": "in_stock",
       "type": "boolean",
       "nullable": false,
-      "default": "true"
+      "default": true
     },
     {
       "name": "stock_count",
       "type": "integer",
       "nullable": false,
-      "default": "0"
+      "default": 0
     }
   ]
 }
