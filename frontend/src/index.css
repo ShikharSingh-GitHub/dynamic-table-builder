@@ -185,7 +185,7 @@ thead th {
   border-radius: 10px;
   width: 96%;
   max-width: 720px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Simple responsive grid for cards */
