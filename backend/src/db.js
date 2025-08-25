@@ -1,6 +1,7 @@
 import knexFn from "knex";
 import { config } from "./config.js";
 
+// Initialize and export the Knex DB client configured with env settings
 export const knex = knexFn({
   client: "mysql2",
   connection: config.db,

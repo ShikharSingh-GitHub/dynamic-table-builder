@@ -1,3 +1,4 @@
+// Routes responsible for provisioning tables and listing table metadata
 import { Router } from "express";
 import { createTableAndRegister } from "../services/registry.js";
 

@@ -1,3 +1,4 @@
+// Per-table admin UI: list rows, search, sort, create/edit/delete records
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../api/client";
@@ -172,8 +173,8 @@ function Editor({ meta, value, onClose, onSave }) {
   const [form, setForm] = useState(value);
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center justify-center">
-      <div className="bg-white p-4 rounded w-full max-w-lg space-y-3">
+    <div className="modal-backdrop">
+      <div className="modal-dialog">
         <div className="text-lg font-semibold">
           {value?.id ? "Edit" : "Create"}
         </div>

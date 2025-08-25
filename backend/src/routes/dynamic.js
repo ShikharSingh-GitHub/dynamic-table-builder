@@ -1,3 +1,4 @@
+// Dynamic CRUD routes that operate on provisioned tables
 import { Router } from "express";
 import { getTableMeta } from "../services/registry.js";
 import { buildListQuery } from "../utils/queries.js";

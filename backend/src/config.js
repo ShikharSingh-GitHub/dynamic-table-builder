@@ -1,3 +1,4 @@
+// Loads environment variables and exports application and DB configuration
 import "dotenv/config";
 
 export const config = {

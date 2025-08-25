@@ -1,3 +1,4 @@
+// React Query hook to fetch list of provisioned tables for the admin landing page
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api/client";
 

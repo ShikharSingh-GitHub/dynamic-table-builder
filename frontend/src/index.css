@@ -168,6 +168,26 @@ thead th {
   justify-content: center;
 }
 
+/* Better modal styles */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* stronger opaque backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-dialog {
+  background: var(--card);
+  color: inherit;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 96%;
+  max-width: 720px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
 /* Simple responsive grid for cards */
 .grid-cards {
   display: grid;

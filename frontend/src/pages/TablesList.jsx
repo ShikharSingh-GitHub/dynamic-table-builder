@@ -1,3 +1,4 @@
+// Landing/admin page that lists provisioned tables as cards
 import { Link } from "react-router-dom";
 import { useTables } from "../hooks/useTables";
 

@@ -2,6 +2,7 @@ import { validateEntityName } from "../utils/names.js";
 import { ALLOWED_TYPES } from "../utils/sqlTypes.js";
 import { buildCreateTableSQL } from "./ddl.js";
 
+// Service that manages the metadata registry (table_registry) and provisions tables
 export async function ensureRegistry(knex) {
   const exists = await knex.schema.hasTable("table_registry");
   if (!exists) {

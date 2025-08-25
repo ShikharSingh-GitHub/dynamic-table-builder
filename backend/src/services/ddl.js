@@ -1,5 +1,6 @@
 import { toMySqlType } from "../utils/sqlTypes.js";
 
+// Build CREATE TABLE SQL statements based on user provided column definitions
 export function buildCreateTableSQL(tableName, columns) {
   const parts = [];
   parts.push("`id` BIGINT PRIMARY KEY AUTO_INCREMENT");

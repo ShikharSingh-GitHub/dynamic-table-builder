@@ -8,6 +8,7 @@ import { provisionRoutes } from "./routes/provision.js";
 import { ensureRegistry } from "./services/registry.js";
 
 const app = express();
+// Express server bootstrap: configure middleware, ensure registry, mount routes, and start server
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 

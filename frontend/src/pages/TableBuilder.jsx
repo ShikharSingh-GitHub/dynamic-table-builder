@@ -1,3 +1,4 @@
+// Page that provides a wizard for creating new tables at runtime
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
