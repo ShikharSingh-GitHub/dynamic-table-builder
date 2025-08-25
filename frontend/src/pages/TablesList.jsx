@@ -56,7 +56,7 @@ export default function TablesList() {
                 </div>
                 <Link
                   to={`/admin/${table.tableName}`}
-                  className="px-3 py-1 border rounded text-sm hover:bg-gray-50">
+                  className="manage-button">
                   Manage
                 </Link>
               </div>

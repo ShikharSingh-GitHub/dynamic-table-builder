@@ -3,9 +3,15 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --accent: #646cff;
+  --muted: #888;
+  --bg: #242424;
+  --card: #1a1a1a;
+  --surface-border: rgba(255, 255, 255, 0.06);
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,51 +19,179 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Page layout tweaks */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg);
+  color: inherit;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Utility-ish classes used by the app components (small, non-invasive) */
+.p-6 {
+  padding: 1.5rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.p-3 {
+  padding: 0.75rem;
+}
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+.flex {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-1 {
+  gap: 0.25rem;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.grid {
+  display: grid;
+}
+.text-center {
+  text-align: center;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.max-w-4xl {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-button {
+/* Card / border / round */
+.card,
+.border {
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  background: rgba(255, 255, 255, 0.02);
 }
-button:hover {
-  border-color: #646cff;
+.rounded {
+  border-radius: 8px;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.rounded-lg {
+  border-radius: 12px;
+}
+.rounded-md {
+  border-radius: 8px;
 }
 
+/* Inputs, selects, textareas sizing */
+input,
+select,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--surface-border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  height: auto;
+}
+
+/* Buttons spacing tweaks (override small differences) */
+button {
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+}
+button.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+button.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Table sizing */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--surface-border);
+  text-align: left;
+}
+thead th {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Modal editor centering */
+.fixed {
+  position: fixed;
+}
+.inset-0 {
+  inset: 0;
+}
+.bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.flex.items-center.justify-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Simple responsive grid for cards */
+.grid-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Light theme adjustments */
 @media (prefers-color-scheme: light) {
   :root {
+    --bg: #ffffff;
+    --card: #f9f9f9;
+    --surface-border: rgba(0, 0, 0, 0.08);
     color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
@@ -66,3 +200,42 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Manage button styling */
+.manage-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.manage-button:hover {
+  background: rgba(100, 108, 255, 0.06);
+}
+
+/* Add column button styling */
+.add-column-btn {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+  border: none;
+}
+.add-column-btn:hover {
+  background-color: #1d4ed8;
+}
+.add-column-btn:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+  /* keep the blue color but indicate disabled via opacity */
+}
+/* End add-column-btn */
+
+/* helper to support tailwind-like hover:shadow-md used in JSX */
+.hover\:shadow-md:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+/* End manage-button */

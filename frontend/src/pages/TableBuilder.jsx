@@ -144,7 +144,7 @@ export default function TableBuilder() {
               type="button"
               onClick={addCol}
               disabled={cols.length >= 10 || loading}
-              className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">
+              className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 add-column-btn">
               + Add Column
             </button>
           </div>
