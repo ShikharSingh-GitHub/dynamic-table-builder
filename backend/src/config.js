@@ -10,4 +10,5 @@ export const config = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
   },
+  adminToken: process.env.ADMIN_TOKEN,
 };

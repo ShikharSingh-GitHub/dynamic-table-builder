@@ -25,7 +25,7 @@ export function dynamicRoutes(knex) {
       });
       const [rows, [{ total }]] = await Promise.all([
         qb.clone().limit(limit).offset(offset),
-        knex(table).count("id as total"),
+        knex(table).count("* as total"),
       ]);
       res.json({
         data: rows,

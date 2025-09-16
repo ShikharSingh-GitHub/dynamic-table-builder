@@ -65,12 +65,8 @@ export async function getTableMeta(knex, tableName) {
     .where({ table_name: tableName })
     .first();
   if (!row) return null;
-  const definition =
-    typeof row.definition === "string"
-      ? JSON.parse(row.definition)
-      : row.definition;
   return {
     tableName: row.table_name,
-    columns: definition.columns,
+    columns: JSON.parse(row.definition).columns,
   };
 }
