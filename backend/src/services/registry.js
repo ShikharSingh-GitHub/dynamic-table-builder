@@ -61,12 +61,43 @@ export async function createTableAndRegister(knex, payload) {
 }
 
 export async function getTableMeta(knex, tableName) {
-  const row = await knex("table_registry")
-    .where({ table_name: tableName })
-    .first();
-  if (!row) return null;
-  return {
-    tableName: row.table_name,
-    columns: JSON.parse(row.definition).columns,
-  };
+  try {
+    const row = await knex("table_registry")
+      .where({ table_name: tableName })
+      .first();
+    if (!row) {
+      console.log(`Table meta not found for: ${tableName}`);
+      return null;
+    }
+
+    let definition;
+    // Handle both string and object cases for the definition field
+    if (typeof row.definition === "string") {
+      try {
+        definition = JSON.parse(row.definition);
+      } catch (parseError) {
+        console.error(
+          `Error parsing definition for table ${tableName}:`,
+          parseError
+        );
+        return null;
+      }
+    } else if (typeof row.definition === "object" && row.definition !== null) {
+      definition = row.definition;
+    } else {
+      console.error(
+        `Invalid definition type for table ${tableName}:`,
+        typeof row.definition
+      );
+      return null;
+    }
+
+    return {
+      tableName: row.table_name,
+      columns: definition.columns || [],
+    };
+  } catch (error) {
+    console.error(`Error getting table meta for ${tableName}:`, error);
+    return null;
+  }
 }

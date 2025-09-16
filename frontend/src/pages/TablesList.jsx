@@ -1,9 +1,30 @@
 // Landing/admin page that lists provisioned tables as cards
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTables } from "../hooks/useTables";
+import { useDeleteTable, useTables } from "../hooks/useTables";
 
 export default function TablesList() {
   const { data, isLoading, error } = useTables();
+  const deleteTable = useDeleteTable();
+  const [deletingTable, setDeletingTable] = useState(null);
+
+  const handleDeleteTable = async (tableName) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the table "${tableName}"? This action cannot be undone.`
+      )
+    ) {
+      setDeletingTable(tableName);
+      try {
+        await deleteTable.mutateAsync(tableName);
+        // Success message could be added here
+      } catch (error) {
+        alert(`Failed to delete table: ${error.message}`);
+      } finally {
+        setDeletingTable(null);
+      }
+    }
+  };
 
   if (isLoading) return <div className="p-6">Loading tables...</div>;
 
@@ -55,11 +76,21 @@ export default function TablesList() {
                     {table.definition?.columns?.length || 0} columns
                   </p>
                 </div>
-                <Link
-                  to={`/admin/${table.tableName}`}
-                  className="manage-button">
-                  Manage
-                </Link>
+                <div className="space-y-2">
+                  <Link
+                    to={`/admin/${table.tableName}`}
+                    className="manage-button block text-center">
+                    Manage
+                  </Link>
+                  <button
+                    onClick={() => handleDeleteTable(table.tableName)}
+                    disabled={deletingTable === table.tableName}
+                    className="delete-button w-full">
+                    {deletingTable === table.tableName
+                      ? "Deleting..."
+                      : "Delete"}
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-2">

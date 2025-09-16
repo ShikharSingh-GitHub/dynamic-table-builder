@@ -32,6 +32,36 @@ export function provisionRoutes(knex) {
     }
   });
 
+  r.delete("/provision/table/:tableName", async (req, res, next) => {
+    try {
+      const { tableName } = req.params;
+
+      // Check if table exists in registry
+      const registryEntry = await knex("table_registry")
+        .where({ table_name: tableName })
+        .first();
+
+      if (!registryEntry) {
+        return res.status(404).json({ message: "table not found" });
+      }
+
+      // Drop the physical table
+      try {
+        await knex.schema.dropTable(tableName);
+      } catch (dropError) {
+        // Log but don't fail - table might not exist physically
+        console.warn(`Failed to drop table ${tableName}:`, dropError.message);
+      }
+
+      // Remove from registry
+      await knex("table_registry").where({ table_name: tableName }).del();
+
+      res.json({ message: "table deleted successfully", tableName });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   return r;
 }
 

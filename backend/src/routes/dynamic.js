@@ -23,21 +23,52 @@ export function dynamicRoutes(knex) {
         sort,
         order,
       });
-      const [rows, [{ total }]] = await Promise.all([
-        qb.clone().limit(limit).offset(offset),
-        knex(table).count("* as total"),
-      ]);
-      res.json({
-        data: rows,
-        page: Number(page) || 1,
-        pageSize: limit,
-        total: Number(total),
-        totalPages: Math.ceil(Number(total) / limit),
-        sort: {
-          column: sort || "id",
-          order: order === "desc" ? "desc" : "asc",
-        },
-      });
+
+      try {
+        // Use raw SQL for count to avoid Knex issues
+        let countQuery = `SELECT COUNT(*) as total FROM ${table}`;
+        const countParams = [];
+
+        // If there are filters from buildListQuery, apply them to count query
+        const textCols = meta.columns
+          .filter((c) => ["string", "text"].includes(c.type))
+          .map((c) => c.name);
+        if (q && textCols.length) {
+          const conditions = textCols
+            .map((col) => `${col} LIKE ?`)
+            .join(" OR ");
+          countQuery += ` WHERE ${conditions}`;
+          for (let i = 0; i < textCols.length; i++) {
+            countParams.push(`%${q}%`);
+          }
+        }
+
+        const [rows, [{ total }]] = await Promise.all([
+          qb.clone().limit(limit).offset(offset),
+          knex.raw(countQuery, countParams).then((result) => result[0]),
+        ]);
+        res.json({
+          data: rows,
+          page: Number(page) || 1,
+          pageSize: limit,
+          total: Number(total),
+          totalPages: Math.ceil(Number(total) / limit),
+          sort: {
+            column: sort || "id",
+            order: order === "desc" ? "desc" : "asc",
+          },
+        });
+      } catch (dbError) {
+        console.error("Database query error:", dbError);
+        // Check if table exists in the database
+        const tableExists = await knex.schema.hasTable(table);
+        if (!tableExists) {
+          return res
+            .status(404)
+            .json({ message: "table not found in database" });
+        }
+        throw dbError;
+      }
     } catch (e) {
       next(e);
     }
